@@ -202,7 +202,7 @@ Map.prototype.addPinAutoComplete = function() {
         return;
       }
 
-      var marker = this.createMarker(place, place.geometry.location, place.name, '00FF00');
+      var marker = this.createMarker(place, place.geometry.location, place.name, '0ab21b');
       this.locations.push(new Point(place.geometry.location.lat(), place.geometry.location.lng(), place, marker));
       this.leftPins.addPin(place.name);
 
