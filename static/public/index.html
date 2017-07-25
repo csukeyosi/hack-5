@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="uft-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet"
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+    crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="static/public/style.css" />
+
+    <title>Neighborhood</title>
+</head>
+
+<body>
+    <div class="max-height row">
+        <div class="col-md-2">
+
+            <div class="row default-padding-top default-padding-left">
+                <div  class="col-md-12 text-center">
+                    <button data-bind="click: showHideRestaurants" type="button" class="btn btn-default"><img src="static/public/img/restaurant.png" height="100px" width="100px"></img></button>
+                </div>
+            </div>
+
+            <div class="row default-padding-top default-padding-left">
+                <div  class="col-md-12 text-center">
+                    <button data-bind="click: showHideGyms" type="button" class="btn btn-default"><img src="static/public/img/gym.png" height="100px" width="100px"></img></button>
+                </div>
+            </div>
+
+            <div class="row default-padding-top default-padding-left">
+                <div  class="col-md-12">
+                    <input data-bind="textInput: currentFilter" class="form-control" type="text" placeholder="Filter markers...">
+                </div>
+            </div>
+
+            <div id="row-table" class="row default-padding-left">
+                <div  class="col-md-12">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody data-bind="foreach: filteredMarkers">
+                            <tr>
+                                <td data-bind="text: title, visible: isVisible, click: $parent.openInfoWindow"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    </div>
+            </div>
+    </div>
+
+
+    <div class="max-height col-md-10 no-padding">
+        <div id="map" class="max-height"></div>
+    </div>
+
+</div>
+
+<script type="text/javascript" src="main.js"></script>
+<script type="text/javascript" src="static/public/libs/knockout-3.4.2.js"></script>
+<script onerror="handleError()" async defer src="https://maps.googleapis.com/maps/api/js?v=3&libraries=places&key=AIzaSyDqSQUVZwX1wce850tlwljCmB17lz3I-jA&callback=initMap"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"crossorigin="anonymous"></script>
+
+</body>
+
+</html>
