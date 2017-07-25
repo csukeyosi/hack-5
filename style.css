@@ -1,0 +1,179 @@
+/*  
+
+    #BOOKING-HACKS
+    Team: Hack-5
+    
+*/
+/*RESET IMPORT*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video, * {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  box-sizing: border-box;
+  vertical-align: baseline; }
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  diplay: block; }
+
+html, body {
+  width: 100%;
+  height: 100%;
+  line-height: 1; }
+
+ol, ul {
+  list-style: none; }
+
+blockquote, q {
+  quotes: none; }
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: none; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  -webkit-margin-before: 0;
+  -webkit-margin-after: 0;
+  -webkit-margin-start: 0px;
+  -webkit-margin-end: 0px;
+  -webkit-padding-start: 0px; }
+
+/* COLORS */
+a {
+  text-decoration: none; }
+
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0; }
+
+body {
+  font-family: sans-serif;
+  letter-spacing: 0;
+  font-size: 14px; }
+
+#principal {
+  margin: 0;
+  padding: 0;
+  display: flex; }
+
+sidebar {
+  background-color: #efefef;
+  flex: 1;
+  min-height: 100%;
+  padding: 1.5%; }
+
+input {
+  display: block;
+  width: 100%;
+  padding: 5px;
+  height: 35px; }
+
+.block {
+  display: block;
+  width: 90%;
+  margin: auto;
+  margin-bottom: 30px; }
+  .block label {
+    padding-bottom: 7px;
+    border-bottom: 1px solid #e0e0e0;
+    margin-bottom: 10px;
+    display: block;
+    font-weight: bold; }
+  .block .label-reset {
+    color: #ed1c24;
+    border-bottom: 0;
+    border-top: 1px solid #e0e0e0;
+    padding-top: 9px;
+    margin-top: 50px;
+    font-weight: normal;
+    font-size: 12px; }
+
+#pinslist {
+  padding: 4%; }
+  #pinslist .pin {
+    margin-bottom: 20px; }
+    #pinslist .pin .pin-name {
+      display: inline-block;
+      width: 90%; }
+    #pinslist .pin .pin-delete {
+      display: inline-block;
+      width: 8%;
+      text-align: right;
+      font-weight: bolder;
+      color: #0ab21b;
+      padding: 3px; }
+
+#hotelslist {
+  padding: 4%; }
+  #hotelslist .best-hotel .but-reserve {
+    background-color: #febb02 !important; }
+  #hotelslist .hotel {
+    margin-bottom: 30px; }
+    #hotelslist .hotel .hotel-name {
+      display: inline-block;
+      width: 68%; }
+    #hotelslist .hotel .hotel-reserve {
+      display: inline-block;
+      width: 25%;
+      text-align: right; }
+      #hotelslist .hotel .hotel-reserve .but-reserve {
+        font-weight: bolder;
+        color: #FFF;
+        background-color: #003580;
+        border: 2px solid #FFF;
+        text-decoration: none;
+        text-transform: uppercase;
+        padding: 8px;
+        font-size: 11px; }
+      #hotelslist .hotel .hotel-reserve .but-reserve:hover {
+        background-color: #001b42; }
+
+.but-search {
+  font-weight: bolder;
+  color: #FFF;
+  background-color: #003580;
+  border: 2px solid #FFF;
+  text-decoration: none;
+  text-transform: uppercase;
+  padding: 12px;
+  text-align: center;
+  display: block;
+  font-size: 13px;
+  width: 100%;
+  margin: auto; }
+
+.but-search:hover {
+  background-color: #001b42; }
+
+.reset-search {
+  color: #ed1c24;
+  display: block;
+  padding: 3px; }
+
+.reset-search:hover {
+  text-decoration: underline; }
+
+main {
+  flex: 3;
+  background-color: #001b42; }
+
+/*# sourceMappingURL=style.css.map */
