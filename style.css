@@ -78,7 +78,6 @@ h1 {
 #principal {
   margin: 0;
   padding: 0;
-      height: 100%;
   display: flex; }
 
 sidebar {
@@ -142,31 +141,24 @@ input {
 .label-besthotels {
   margin-top: 30px; }
 
-#hotelslist {
-  padding: 4%; }
-  #hotelslist .best-hotel .but-reserve {
-    background-color: #febb02 !important; }
-  #hotelslist .hotel {
-    margin-bottom: 30px; }
-    #hotelslist .hotel .hotel-name {
-      display: inline-block;
-      width: 60%; }
-    #hotelslist .hotel .hotel-reserve {
-      display: inline-block;
-      width: 35%;
-      text-align: right; }
-      #hotelslist .hotel .hotel-reserve .but-reserve {
-        font-weight: bolder;
-        color: #FFF;
-        background-color: #003580;
-        border: 2px solid #FFF;
-        text-decoration: none;
-        text-transform: uppercase;
-        padding: 8px;
-        font-size: 11px; }
-      #hotelslist .hotel .hotel-reserve .but-reserve:hover {
-        background-color: #001b42; }
+/* BUTTONS FOR PINS */
+.but-reserve {
+  font-weight: bolder;
+  color: #FFF;
+  background-color: #003580;
+  border: 2px solid #FFF;
+  text-decoration: none;
+  text-transform: uppercase;
+  padding: 8px;
+  font-size: 11px; }
 
+.but-reserve:hover {
+  background-color: #001b42; }
+
+.but-reservegold {
+  background-color: #febb02 !important; }
+
+/* BUTTON FOR SEARCH */
 .but-search {
   font-weight: bolder;
   color: #FFF;
