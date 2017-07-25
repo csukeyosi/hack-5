@@ -1,5 +1,6 @@
-function Map() {
+function Map(pinList) {
     this.center =  {lat: 52.3702160, lng: 4.8951680};
+    this.leftPins = pinList;
     this.map = new google.maps.Map(document.getElementById('map'), {
         center: this.center,
         zoom: 15,
@@ -25,9 +26,32 @@ function Map() {
             if (results.length > 0) {
                 title = results[0].formatted_address;
             }
-            this.locations.push(new Point(e.latLng.lat(), e.latLng.lng(), title));
-             this.createMarker(e, e.latLng, title, '00FF00');
+            var marker = this.createMarker(e, e.latLng, title, '00FF00');
+            this.locations.push(new Point(e.latLng.lat(), e.latLng.lng(), title, marker));
+            this.leftPins.addPin(title);
+
         }.bind(this));
+    }.bind(this));
+
+
+    $(this.leftPins).on('pinRemoved', function(event, removedPin) {
+        var pinName = $(removedPin)[0].firstChild.innerText;
+
+        var x = this.locations;
+        for (var i = 0; i < this.locations.length; i++) {
+            var locationName = this.locations[i].title;
+            var comaIndex = locationName.indexOf(',');
+            if (comaIndex > -1) {
+                var strippedName = locationName.substring(0, comaIndex);
+            }
+
+            if (pinName === strippedName) {
+                this.locations[i].marker.setMap(null);
+                this.locations.splice(i, 1);
+                return;
+            }
+        }
+
     }.bind(this));
 
     this.addCityAutoComplete();
@@ -53,6 +77,8 @@ Map.prototype.createMarker = function(element, position, title, color) {
 
     this.addOnClickListener(marker);
     marker.setMap(this.map);
+
+    return marker;
 };
 
 /**
@@ -166,9 +192,9 @@ Map.prototype.addPinAutoComplete = function() {
         return;
       }
 
-      this.createMarker(place, place.geometry.location, place.name, '00FF00');
-
-      this.locations.push(new Point(place.geometry.location.lat(), place.geometry.location.lng(), place));
+      var marker = this.createMarker(place, place.geometry.location, place.name, '00FF00');
+      this.locations.push(new Point(place.geometry.location.lat(), place.geometry.location.lng(), place, marker));
+      this.leftPins.addPin(place.name);
 
       this.map.setCenter(place.geometry.location);
       this.map.setZoom(15);

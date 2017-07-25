@@ -31,14 +31,6 @@
               <label name="your-pins">Your points of interest</label> 
                 <p class="message">Add more pins to your map. You can select up to 10 points of interest.</p>
                 <ul id="pinslist">
-                  <li class="pin">
-                      <div class="pin-name">Pin Name Here</div>
-                      <a href="#" title="Delete your Pin" ><div class="pin-delete">x</div> </a>   
-                  </li>                  
-                  <li class="pin">
-                      <div class="pin-name">Pin Name Here</div>
-                      <a href="#" title="Delete your Pin" ><div class="pin-delete">x</div> </a>   
-                  </li>
                 </ul>
               <a href="#" title="Search Hotels" class="but-search"  data-bind="click: getCentroid"  onclick="getCentroid()">
                   show me hotels</a>  
@@ -86,14 +78,17 @@
           <main>
             <div id="map" class="max-height"></div>
           </main>
-      </div>        
-        
-      <script type="text/javascript" src="js/main.js"></script>
+      </div>
+
+
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
       <script type="text/javascript" src="js/point.js"></script>
       <script type="text/javascript" src="js/region.js"></script>
       <script type="text/javascript" src="js/map.js"></script>
+      <script type="text/javascript" src="js/pinList.js"></script>
+      <script type="text/javascript" src="js/main.js"></script>
       <script onerror="handleError()" async defer src="https://maps.googleapis.com/maps/api/js?v=3&libraries=places&key=AIzaSyDqSQUVZwX1wce850tlwljCmB17lz3I-jA&callback=initMap"></script>
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+
       <!-- Latest compiled and minified JavaScript -->
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"crossorigin="anonymous"></script>
         
