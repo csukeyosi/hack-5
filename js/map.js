@@ -50,7 +50,15 @@ Map.prototype.createMarker = function(position, color) {
  */
 Map.prototype.addOnClickListener = function(marker) {
     marker.addListener('click', function() {
-        this.populateInfoWindow(marker);
+    this.getAddress(marker.position, function(results) {
+        if (results.length > 0) {
+            marker.title = results[0].formatted_address;
+        } else {
+            marker.title = 'address not found';
+        }
+    });
+
+     this.populateInfoWindow(marker);
     }.bind(this));
 };
 
@@ -67,7 +75,7 @@ Map.prototype.populateInfoWindow = function(marker) {
 
     // Check to make sure the infowindow is not already opened on this marker.
     if (this.infowindow.marker != marker) {
-        marker.setAnimation(google.maps.Animation.BOUNCE);
+        // marker.setAnimation(google.maps.Animation.BOUNCE);
         // Clear the infowindow content to give the streetview time to load.
         this.infowindow.setContent('');
         this.infowindow.marker = marker;
@@ -218,7 +226,17 @@ Map.prototype.makeMarkerIcon = function(path) {
         }
 
     }.bind(this));
- }
+ };
 
-
-
+ Map.prototype.getAddress = function(position, callback) {
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function() {
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+            var results = JSON.parse(xmlHttp.responseText).results;
+            callback(results);
+        }
+    }
+    var theUrl = 'http://maps.googleapis.com/maps/api/geocode/json?latlng=' + position.lat() + ',' + position.lng() + '&sensor=true';
+    xmlHttp.open("GET", theUrl, true);
+    xmlHttp.send(null);
+ };
