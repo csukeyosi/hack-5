@@ -139,7 +139,7 @@ Map.prototype.getMarkers = function(center) {
         if (status == google.maps.places.PlacesServiceStatus.OK) {
             for (var i = 0; i < results.length; i++) {
                 console.log(results[i])
-                this.createMarker(result[i], results[i].geometry.location, 'lala', '0000FF');
+                this.createMarker(result[i], results[i].geometry.location, results[i].name, '0000FF');
             }
         } else {
             alert("Could not retrieve the " + type + "s. (Status error: " + status + ")");
@@ -219,9 +219,9 @@ Map.prototype.makeMarkerIcon = function(path) {
         if (status == google.maps.places.PlacesServiceStatus.OK) {
             for (var i = 0; i < results.length; i++) {
                 if (i === 0) {
-                    this.createMarker(results[i], results[i].geometry.location, 'FFFF00');
+                    this.createMarker(results[i], results[i].geometry.location, results[i].name, 'FFFF00');
                 } else {
-                    this.createMarker(results[i], results[i].geometry.location, '0000FF');
+                    this.createMarker(results[i], results[i].geometry.location, results[i].name, '0000FF');
                 }
             }
         } else {
