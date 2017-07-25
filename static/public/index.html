@@ -19,38 +19,9 @@
         <div class="col-md-2">
 
             <div class="row default-padding-top default-padding-left">
-                <div  class="col-md-12 text-center">
-                    <button data-bind="click: showHideRestaurants" type="button" class="btn btn-default"><img src="static/public/img/restaurant.png" height="100px" width="100px"></img></button>
-                </div>
-            </div>
-
-            <div class="row default-padding-top default-padding-left">
-                <div  class="col-md-12 text-center">
-                    <button data-bind="click: showHideGyms" type="button" class="btn btn-default"><img src="static/public/img/gym.png" height="100px" width="100px"></img></button>
-                </div>
-            </div>
-
-            <div class="row default-padding-top default-padding-left">
                 <div  class="col-md-12">
-                    <input data-bind="textInput: currentFilter" class="form-control" type="text" placeholder="Filter markers...">
+                    <input data-bind="textInput: currentFilter" class="form-control" type="text" placeholder="What do you want to visit?">
                 </div>
-            </div>
-
-            <div id="row-table" class="row default-padding-left">
-                <div  class="col-md-12">
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody data-bind="foreach: filteredMarkers">
-                            <tr>
-                                <td data-bind="text: title, visible: isVisible, click: $parent.openInfoWindow"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    </div>
             </div>
     </div>
 

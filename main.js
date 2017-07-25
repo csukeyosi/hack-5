@@ -142,17 +142,17 @@ function getMarkers(center, type, callback) {
 		type: [type]
 	};
 
-	var service = new google.maps.places.PlacesService(map);
-	service.nearbySearch(request, function(results, status) {
-		var markers = [];
-		if (status == google.maps.places.PlacesServiceStatus.OK) {
-			createMarkers(results, markers, type);
-		} else {
-			alert("Could not retrieve the " + type + "s. (Status error: " + status + ")");
-		}
-
-		callback(markers);
-	});
+	// var service = new google.maps.places.PlacesService(map);
+	// service.nearbySearch(request, function(results, status) {
+	// 	var markers = [];
+	// 	if (status == google.maps.places.PlacesServiceStatus.OK) {
+	// 		createMarkers(results, markers, type);
+	// 	} else {
+	// 		alert("Could not retrieve the " + type + "s. (Status error: " + status + ")");
+	// 	}
+    //
+	// 	callback(markers);
+	// });
 }
 
 /**
@@ -175,7 +175,7 @@ function createMarkers(results, markers, type) {
 			position: position,
 			title: title,
 			animation: google.maps.Animation.DROP,
-			icon: defaultIcon,
+			//icon: defaultIcon,
 			id: i,
 			isVisible: true,
 			type: type
@@ -185,8 +185,8 @@ function createMarkers(results, markers, type) {
 
 		// add listeners
 		addOnClickListener(marker);
-		addOnMouseOverListener(marker, highlightedIcon);
-		addOnMouseOutListener(marker, defaultIcon);
+		//addOnMouseOverListener(marker, highlightedIcon);
+		//addOnMouseOutListener(marker, defaultIcon);
 
 		marker.setMap(map);
 		bounds.extend(marker.position);
