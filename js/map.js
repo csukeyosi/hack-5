@@ -45,7 +45,7 @@ function Map(pinList) {
                 var strippedName = locationName.substring(0, comaIndex);
             }
 
-            if (pinName === strippedName) {
+            if (pinName === locationName || pinName === strippedName) {
                 this.locations[i].marker.setMap(null);
                 this.locations.splice(i, 1);
                 return;
@@ -204,7 +204,7 @@ Map.prototype.addPinAutoComplete = function() {
       }
 
       var marker = this.createMarker(place, place.geometry.location, place.name, '0ab21b');
-      this.locations.push(new Point(place.geometry.location.lat(), place.geometry.location.lng(), place, marker));
+      this.locations.push(new Point(place.geometry.location.lat(), place.geometry.location.lng(), place.name, marker));
       this.leftPins.addPin(place.name);
 
       this.map.setCenter(place.geometry.location);
