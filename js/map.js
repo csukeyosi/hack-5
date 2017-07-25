@@ -116,18 +116,18 @@ Map.prototype.populateInfoWindow = function(marker) {
         $.get('/yelp_search?' + params, function(data, status) {
             if (status === 'success' && data.businesses.length > 0) {
                 var business = data.businesses[0];
-                content = '<div class="bold" style="Font-size: 13px;line-height: 17px">' + marker.title + '</div>' +
+                content = '<div id="pano" style="width:150px;height: 100px;overflow: hidden;margin: 8px 0">' +
+                    '<a href="https://www.booking.com"><img id="" class="img-infowindow text-center" width="100%" height="auto" src='+ business.image_url +'></img></a>' +
+                    '</div>' +
+                    '<div style="Font-size: 13px;line-height: 17px;font-weight: bold;width:150px;">' + marker.title + '</div>' +
                     '<hr>' +
 
                     '<div>' +
-                    '<p style="Font-size: 13px;line-height: 17px">Phone: ' + business.display_phone +'<br>' + 'Rating: '+ business.rating + '</p>' +
+                    '<p style="Font-size: 13px;line-height: 17px;width:150px;">Phone: ' + business.display_phone +'<br>' + 'Rating: '+ business.rating + '</p>' +
                     '</div>' +
 
-                    '<p style="Font-size: 13px;line-height: 17px">For more info:</p>' +
-
-                    '<div id="pano" style="width:100px;height: 100px;overflow: hidden;margin-top: 8px">' +
-                    '<a href="https://www.booking.com"><img id="" class="img-infowindow text-center" width="100%" height="auto" src='+ business.image_url +'></img></a>' +
-                    '</div>';
+                    '<p style="Font-size: 13px;line-height: 17px;width:150px;">For more info:</p>' +
+                    '<a href="https://www.booking.com" class="but-reserve">Book Now</a>';
             } else {
                 content = '<div class="bold">' + marker.title + '</div>';
             }

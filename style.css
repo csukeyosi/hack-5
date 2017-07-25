@@ -144,14 +144,18 @@ input {
 
 /* BUTTONS FOR PINS */
 .but-reserve {
-  font-weight: bolder;
+  font-weight: bold;
   color: #FFF;
   background-color: #003580;
   border: 2px solid #FFF;
   text-decoration: none;
   text-transform: uppercase;
   padding: 8px;
-  font-size: 11px; }
+  font-size: 13px;
+  display: inline-block;
+  width: 100px;
+  text-align: center;
+  margin-top: 8px; }
 
 .but-reserve:hover {
   background-color: #001b42; }
