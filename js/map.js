@@ -189,7 +189,7 @@ Map.prototype.makeMarkerIcon = function(path) {
  Map.prototype.getMarkers = function(center) {
     var request = {
         location: center,
-        radius: '200',
+        radius: '300',
         type: ['lodging']
     };
 
