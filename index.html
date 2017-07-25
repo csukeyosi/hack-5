@@ -9,18 +9,27 @@
       <div id="principal">          
           <sidebar>              
             <div class="block">
-              Booking Awesome Feature
+                <h1>Find a hotel near your favourite attractions</h1>
+                <p class="message">Use our interactive map to find accommodation near your top attractions. Add pins to tell us where you'd like to visit and we'll show you the best hotels for your trip.</p>
             </div>
+              
+            <div class="yellowblock"> 
+                <div class="block">
+                  <label name="country">Choose your destination</label>  
+                  <input id="city-auto" class="form-control" type="text" placeholder="Add a location, from city to laid-back beach town">
+
+                </div>
+                <div class="block">
+                  <label name="pins-search">Tell us your points of interest</label>  
+                  <input id="pin-auto" class="form-control" type="text" placeholder="Type your favourite landmarks, attractions or restaurants">                
+                </div>
+            </div> 
+              
+            <a href="#" class="travel-message">Need inspiration? Check out our travel guide</a>  
+              
             <div class="block">
-              <label name="country">Select your Destination</label>  
-              <input id="city-auto" class="form-control" type="text">
-            </div>
-            <div class="block">
-              <label name="pins-search">Add your Pins</label>  
-              <input id="pin-auto" class="form-control" type="text">
-            </div>
-            <div class="block">
-              <label name="your-pins">Your Pins</label> 
+              <label name="your-pins">Your points of interest</label> 
+                <p class="message">Add more pins to your map. You can select up to 10 points of interest.</p>
                 <ul id="pinslist">
                   <li class="pin">
                       <div class="pin-name">Pin Name Here</div>
@@ -32,34 +41,46 @@
                   </li>
                 </ul>
               <a href="#" title="Search Hotels" class="but-search"  data-bind="click: getCentroid"  onclick="getCentroid()">
-                  Search your Best Hotel</a>  
+                  show me hotels</a>  
             </div>
+<!--
             <div class="block">
-              <label name="best-hotel">Best Hotel Options</label>
+              
+                <label name="best-hotel" class="label-besthotels">Best hotel options for you</label>
+                
                 <ul id="hotelslist">
+                    
+                    
                   <li class="hotel best-hotel">
                       <div class="hotel-name">Hotel Name Here</div>
                       <div class="hotel-reserve">
-                      <a href="#" title="Reserve your Hotel" class="but-reserve">reserve</a>   
+                      <a href="#" title="Reserve your Hotel" class="but-reserve">book now</a>   
                       </div>   
                   </li>                    
                   <li class="hotel">
                       <div class="hotel-name">Hotel Name Here</div>
                       <div class="hotel-reserve">
-                      <a href="#" title="Reserve your Hotel" class="but-reserve">reserve</a>   
+                      <a href="#" title="Reserve your Hotel" class="but-reserve">book now</a>   
                       </div>   
                   </li>                  
                   <li class="hotel">
                       <div class="hotel-name">Hotel Name Here</div>
                       <div class="hotel-reserve">
-                      <a href="#" title="Reserve your Hotel" class="but-reserve">reserve</a>   
+                      <a href="#" title="Reserve your Hotel" class="but-reserve">book now</a>   
                       </div>     
                   </li>
                 </ul>
             </div>
+--> 
+          <div class="block">
+              
+          </div>
+              
             <div class="block">
-              <label name="reset" class="label-reset">
-                  <a href="#" class="reset-search" onclick="resetSearch()">Reset your Search</a></label>  
+
+               
+                <a href="#" title="Delete your Pin" class="button-delete" onclick="resetSearch()">Start a new search
+                </a> 
             </div>          
           </sidebar>
           <main>
