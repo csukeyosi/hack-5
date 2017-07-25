@@ -8,6 +8,7 @@ function Map() {
     this.locations = [];
 
     this.infowindow = new google.maps.InfoWindow();
+
     google.maps.event.addListener(this.infowindow,'closeclick',function(){
         if (this.infowindow.marker) {
             this.infowindow.marker.setAnimation(null);
@@ -46,8 +47,8 @@ Map.prototype.createMarker = function(position) {
  */
 Map.prototype.addOnClickListener = function(marker) {
     marker.addListener('click', function() {
-        populateInfoWindow(this);
-    });
+        this.populateInfoWindow(marker);
+    }.bind(this));
 };
 
 /**
@@ -57,16 +58,17 @@ Map.prototype.addOnClickListener = function(marker) {
  * @param {google.maps.Marker} marker - the clicked marker.
  */
 Map.prototype.populateInfoWindow = function(marker) {
-    if (infowindow.marker) {
-        infowindow.marker.setAnimation(null);
+    if (this.infowindow.marker) {
+        this.infowindow.marker.setAnimation(null);
     }
 
     // Check to make sure the infowindow is not already opened on this marker.
-    if (infowindow.marker != marker) {
+    if (this.infowindow.marker != marker) {
         marker.setAnimation(google.maps.Animation.BOUNCE);
         // Clear the infowindow content to give the streetview time to load.
-        infowindow.setContent('');
-        infowindow.marker = marker;
+        this.infowindow.setContent('');
+        this.infowindow.marker = marker;
+        var self = this;
 
         var params = ('term=' + marker.title +
             '&latitude=' + marker.position.lat() +
@@ -97,13 +99,13 @@ Map.prototype.populateInfoWindow = function(marker) {
                 '<hr>' +
                 '<div>Error: could not retrieve additional information.</div>';
         }).always(function() {
-            infowindow.setContent(content);
+            self.infowindow.setContent(content);
         });
 
         // Open the infowindow on the correct marker.
-        infowindow.open(this, marker);
+        this.infowindow.open(this, marker);
     } else {
-        infowindow.close();
+        this.infowindow.close();
     }
 };
 
