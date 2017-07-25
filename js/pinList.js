@@ -11,9 +11,6 @@ PinList.prototype.createPinHTML = function(name) {
 };
 
 PinList.prototype.addPin = function(name) {
-
-
-    debugger
     var comaIndex = name.indexOf(',');
     if (comaIndex > -1) {
         name = name.substr(0, comaIndex);
