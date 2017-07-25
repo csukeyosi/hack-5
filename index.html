@@ -4,11 +4,6 @@
         <meta charset="utf-8">
         <title>HACK-5 Team : </title>        
         <link rel="stylesheet" href="style.css">
-        <style>
-        .max-height {
-          height: 100%;
-        }
-        </style>
     </head>
     <body>        
       <div id="principal">          
@@ -17,12 +12,12 @@
               Booking Awesome Feature
             </div>
             <div class="block">
-              <label name="country">Select your Country</label>  
-              <input type="text" id="country">
+              <label name="country">Select your City</label>  
+              <input id="city-auto" class="form-control" type="text">
             </div>
             <div class="block">
               <label name="pins-search">Add your Pins</label>  
-              <input type="text" id="pins-search">
+              <input id="pin-auto" class="form-control" type="text">
             </div>
             <div class="block">
               <label name="your-pins">Your Pins</label> 
@@ -36,7 +31,7 @@
                       <a href="#" title="Delete your Pin" ><div class="pin-delete">x</div> </a>   
                   </li>
                 </ul>
-              <a href="#" title="Search Hotels" class="but-search">
+              <a href="#" title="Search Hotels" class="but-search"  data-bind="click: getCentroid"  onclick="getCentroid()">
                   Search your Best Hotel</a>  
             </div>
             <div class="block">
