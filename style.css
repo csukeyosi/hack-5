@@ -176,4 +176,7 @@ main {
   flex: 3;
   background-color: #001b42; }
 
+.max-height {
+        height: 100%; }
+
 /*# sourceMappingURL=style.css.map */
