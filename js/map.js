@@ -122,7 +122,7 @@ Map.prototype.populateInfoWindow = function(marker) {
                 }
                 var business = data.businesses[0];
                 content = '<div id="pano" style="width:150px;height: 100px;overflow: hidden;margin: 8px 0">' +
-                    '<a href="https://www.booking.com"><img id="" class="img-infowindow text-center" width="100%" height="auto" src='+ business.image_url +'></img></a>' +
+                    '<a href="'+ business.url + '"><img id="" class="img-infowindow text-center" width="100%" height="auto" src='+ business.image_url +'></img></a>' +
                     '</div>' +
                     '<div style="Font-size: 13px;line-height: 17px;font-weight: bold;width:150px;">' + marker.title + '</div>' +
                     '<hr>' +
