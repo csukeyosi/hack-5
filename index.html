@@ -21,8 +21,12 @@
                 </div>
                 <div class="block">
                   <label name="pins-search">Tell us your points of interest</label>  
-                  <input id="pin-auto" class="form-control" type="text" placeholder="Type your favourite landmarks, attractions or restaurants">                
+                  <input id="pin-auto" class="form-control" type="text" placeholder="Search for landmarks, attractions or restaurants">                
                 </div>
+                
+                <div class="right-align">
+                <a href="#" title="Search Hotels" class="but-search"  data-bind="click: getCentroid"  onclick="getCentroid()">show me hotels</a>
+                </div>    
             </div> 
               
             <a href="https://www.booking.com/destinationfinder" class="travel-message">Need inspiration? Check out our travel guide</a>  
@@ -32,8 +36,7 @@
                 <p class="message">Add more pins to your map. You can select up to 10 points of interest.</p>
                 <ul id="pinslist">
                 </ul>
-              <a href="#" title="Search Hotels" class="but-search"  data-bind="click: getCentroid"  onclick="getCentroid()">
-                  show me hotels</a>  
+                
             </div>
 <!--
             <div class="block">

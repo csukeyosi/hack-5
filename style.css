@@ -71,15 +71,18 @@ a {
   text-decoration: none; }
 
 h1 {
-  font-size: 16px;
+  font-size: 20px;
   font-weight: bold;
   margin-bottom: 10px; }
 
 #principal {
   margin: 0;
   padding: 0;
-  height: 100%;
-  display: flex; }
+  display: flex;
+  height: 100%; }
+
+.right-align {
+  text-align: right; }
 
 sidebar {
   background-color: #efefef;
@@ -91,9 +94,7 @@ input {
   display: block;
   width: 100%;
   padding: 5px;
-  height: 35px;
-  margin-bottom: 15px;
-  font-size: 12px; }
+  height: 35px; }
 
 .message {
   font-size: 12px;
@@ -117,15 +118,15 @@ input {
 .block {
   display: block;
   width: 90%;
-  margin: auto; }
+  margin: auto;
+  margin-bottom: 10px; }
   .block label {
     margin-bottom: 10px;
     display: block;
     font-weight: bold; }
 
 #pinslist {
-  padding: 4%;
-  margin-top: 10px; }
+  padding: 4%; }
   #pinslist .pin {
     margin-bottom: 20px; }
     #pinslist .pin .pin-name {
@@ -168,15 +169,14 @@ input {
   font-weight: bolder;
   color: #FFF;
   background-color: #003580;
-  border: 2px solid #FFF;
   text-decoration: none;
   text-transform: uppercase;
   padding: 12px;
   text-align: center;
-  display: block;
+  display: inline-block;
   font-size: 13px;
-  width: 100%;
-  margin: auto; }
+  margin-right: 5%;
+  margin-bottom: 8px; }
 
 .but-search:hover {
   background-color: #001b42; }
@@ -188,7 +188,7 @@ input {
   display: inline-block;
   color: #2f2f2f;
   text-transform: uppercase;
-  margin-top: 35px;
+  margin-top: 20px;
   font-size: 10px;
   font-weight: bold; }
 
