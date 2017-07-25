@@ -1,6 +1,7 @@
 function Map(pinList) {
     this.center =  {lat: 52.3702160, lng: 4.8951680};
     this.leftPins = pinList;
+    this.currentMarkers = [];
     this.map = new google.maps.Map(document.getElementById('map'), {
         center: this.center,
         zoom: 15,
@@ -222,6 +223,13 @@ Map.prototype.makeMarkerIcon = function(path) {
     return markerImage;
 };
 
+Map.prototype.deleteCurrentMarkers = function () {
+    for (var i = 0; i < this.currentMarkers.length; i++) {
+        this.currentMarkers[i].setMap(null);
+    }
+    this.currentMarkers = [];
+};
+
  Map.prototype.getMarkers = function(center) {
     var request = {
         location: center,
@@ -229,15 +237,17 @@ Map.prototype.makeMarkerIcon = function(path) {
         type: ['lodging']
     };
 
+    this.deleteCurrentMarkers();
     var service = new google.maps.places.PlacesService(this.map);
+
     service.nearbySearch(request, function(results, status) {
-        var markers = [];
+
         if (status == google.maps.places.PlacesServiceStatus.OK) {
             for (var i = 0; i < results.length; i++) {
                 if (i === 0) {
-                    this.createMarker(results[i], results[i].geometry.location, results[i].name, 'febb02', true, true);
+                    this.currentMarkers.push(this.createMarker(results[i], results[i].geometry.location, results[i].name, 'febb02', true, true));
                 } else {
-                    this.createMarker(results[i], results[i].geometry.location, results[i].name, '003580', false, true);
+                    this.currentMarkers.push(this.createMarker(results[i], results[i].geometry.location, results[i].name, '003580', false, true));
                 }
             }
         } else {
