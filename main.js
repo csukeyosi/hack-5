@@ -77,7 +77,7 @@ function initMap() {
 	google.maps.event.addListener(map,'click',function(e){
    		console.log(e)
    		createMarker(e.latLng);
-   		locations.push(new Point(e.latLng.lat(), e.latLng.lng()));
+   		locations.push(new Point(e.latLng.lat(), e.latLng.lng(), e.latLng));
    		console.log(locations);
 	});
 
@@ -95,7 +95,7 @@ function initMap() {
 
 function getCentroid() {
 	var region = new Region(locations);
-	console.log(region.centroid());
+	return region.centroid();
 };
 
 /**
@@ -138,8 +138,9 @@ var ViewModel = function() {
  	self.currentFilter = ko.observable();
 
  	self.getCentroid = function() {
- 		console.log("lalalalla")
-		getCentroid();
+		var centroid = getCentroid();
+		var myLatlng = new google.maps.LatLng(centroid.x, centroid.y);
+		createMarker(myLatlng);
 	};
 
 	self.filteredMarkers = ko.computed(function() {
@@ -268,6 +269,7 @@ function createMarker(position) {
 	// Get the position from the location array.
 	// var title = 'teste';
 	// Create a marker per location, and put into markers array.
+	console.log(position)
 	var marker = new google.maps.Marker({
 		position: position,
 		// title: title,
