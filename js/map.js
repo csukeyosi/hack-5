@@ -3,7 +3,10 @@ function Map() {
     this.map = new google.maps.Map(document.getElementById('map'), {
         center: this.center,
         zoom: 15,
-        mapTypeControl: false
+        mapTypeControl: false,
+        zoomControlOptions: {
+            position: google.maps.ControlPosition.RIGHT_CENTER
+        }
     });
     this.locations = [];
 
