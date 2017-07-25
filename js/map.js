@@ -126,29 +126,6 @@ Map.prototype.getCentroid = function() {
     return myLatlng;
 };
 
-Map.prototype.getMarkers = function(center) {
-    var request = {
-        location: center,
-        radius: '200',
-        type: ['lodging']
-    };
-
-    var service = new google.maps.places.PlacesService(this.map);
-    service.nearbySearch(request, function(results, status) {
-        var markers = [];
-        if (status == google.maps.places.PlacesServiceStatus.OK) {
-            for (var i = 0; i < results.length; i++) {
-                console.log(results[i])
-                this.createMarker(result[i], results[i].geometry.location, results[i].name, '0000FF');
-            }
-        } else {
-            alert("Could not retrieve the " + type + "s. (Status error: " + status + ")");
-        }
-
-    }.bind(this));
- };
-
-
 Map.prototype.addCityAutoComplete = function() {
     var options = {
         types: ['(cities)']
