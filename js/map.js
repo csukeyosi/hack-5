@@ -57,12 +57,13 @@ function Map(pinList) {
     this.addPinAutoComplete();
 }
 
-Map.prototype.createMarker = function(element, position, title, color, bestmatch) {
+Map.prototype.createMarker = function(element, position, title, color, bestmatch, isHotel) {
    // Get the position from the location array.
     // var title = 'teste';
     // Create a marker per location, and put into markers array.
     var marker = new google.maps.Marker({
         bestmatch: bestmatch,
+        isHotel: isHotel,
         title: title,
         element: element,
         position: position,
@@ -121,6 +122,9 @@ Map.prototype.populateInfoWindow = function(marker) {
                     buttonClass = 'but-reserve but-reservegold';
                 }
                 var business = data.businesses[0];
+                if (marker.isHotel) {
+                    business.url = "https://www.booking.com";
+                }
                 content = '<div id="pano" style="width:150px;height: 100px;overflow: hidden;margin: 8px 0">' +
                     '<a href="'+ business.url + '"><img id="" class="img-infowindow text-center" width="100%" height="auto" src='+ business.image_url +'></img></a>' +
                     '</div>' +
@@ -131,8 +135,10 @@ Map.prototype.populateInfoWindow = function(marker) {
                     '<p style="Font-size: 13px;line-height: 17px;width:150px;">Phone: ' + business.display_phone +'<br>' + 'Rating: '+ business.rating + '</p>' +
                     '</div>' +
 
-                    '<p style="Font-size: 13px;line-height: 17px;width:150px;">For more info:</p>' +
-                    '<a href="https://www.booking.com" class="'+ buttonClass +'">Book Now</a>';
+                    '<p style="Font-size: 13px;line-height: 17px;width:150px;">For more info:</p>';
+                 if (marker.isHotel) {
+                    content += '<a href="https://www.booking.com" class="'+ buttonClass +'">Book Now</a>';
+                }
             } else {
                 content = '<div class="bold">' + marker.title + '</div>';
             }
@@ -229,9 +235,9 @@ Map.prototype.makeMarkerIcon = function(path) {
         if (status == google.maps.places.PlacesServiceStatus.OK) {
             for (var i = 0; i < results.length; i++) {
                 if (i === 0) {
-                    this.createMarker(results[i], results[i].geometry.location, results[i].name, 'febb02', true);
+                    this.createMarker(results[i], results[i].geometry.location, results[i].name, 'febb02', true, true);
                 } else {
-                    this.createMarker(results[i], results[i].geometry.location, results[i].name, '003580', false);
+                    this.createMarker(results[i], results[i].geometry.location, results[i].name, '003580', false, true);
                 }
             }
         } else {
