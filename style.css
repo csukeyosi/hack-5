@@ -180,4 +180,18 @@ main {
 .max-height {
         height: 100%; }
 
+.bold {
+  font-weight: bold;
+}
+
+#pano {
+  width: 200px;
+  height: 200px;
+}
+
+.img-infowindow {
+   width: 100%;
+   height: 100%;
+}
+
 /*# sourceMappingURL=style.css.map */

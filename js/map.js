@@ -17,19 +17,27 @@ function Map() {
     }.bind(this));
 
     google.maps.event.addListener(this.map,'click',function(e){
-        this.createMarker(e.latLng, '00FF00');
-        this.locations.push(new Point(e.latLng.lat(), e.latLng.lng()));
+        this.getAddress(e.latLng, function(results) {
+            var title = 'address not found';
+            if (results.length > 0) {
+                title = results[0].formatted_address;
+            }
+            this.locations.push(new Point(e.latLng.lat(), e.latLng.lng(), title));
+             this.createMarker(e, e.latLng, title, '00FF00');
+        }.bind(this));
     }.bind(this));
 
     this.addCityAutoComplete();
     this.addPinAutoComplete();
 }
 
-Map.prototype.createMarker = function(position, color) {
+Map.prototype.createMarker = function(element, position, title, color) {
    // Get the position from the location array.
     // var title = 'teste';
     // Create a marker per location, and put into markers array.
     var marker = new google.maps.Marker({
+        title: title,
+        element: element,
         position: position,
         // title: title,
         animation: google.maps.Animation.DROP,
@@ -50,15 +58,7 @@ Map.prototype.createMarker = function(position, color) {
  */
 Map.prototype.addOnClickListener = function(marker) {
     marker.addListener('click', function() {
-    this.getAddress(marker.position, function(results) {
-        if (results.length > 0) {
-            marker.title = results[0].formatted_address;
-        } else {
-            marker.title = 'address not found';
-        }
-    });
-
-     this.populateInfoWindow(marker);
+        this.populateInfoWindow(marker);
     }.bind(this));
 };
 
@@ -101,9 +101,7 @@ Map.prototype.populateInfoWindow = function(marker) {
                     '<a href=' + business.url + '><img id="" class="img-infowindow text-center" src='+ business.image_url +'></img></a>' +
                     '</div>';
             } else {
-                content = '<div class="bold">' + marker.title + '</div>' +
-                    '<hr>' +
-                    '<div>No Additional Information Found</div>';
+                content = '<div class="bold">' + marker.title + '</div>';
             }
         }).fail(function() {
             content = '<div class="bold">' + marker.title + '</div>' +
@@ -140,7 +138,8 @@ Map.prototype.getMarkers = function(center) {
         var markers = [];
         if (status == google.maps.places.PlacesServiceStatus.OK) {
             for (var i = 0; i < results.length; i++) {
-                this.createMarker(results[i].geometry.location, '0000FF');
+                console.log(results[i])
+                this.createMarker(result[i], results[i].geometry.location, 'lala', '0000FF');
             }
         } else {
             alert("Could not retrieve the " + type + "s. (Status error: " + status + ")");
@@ -187,9 +186,9 @@ Map.prototype.addPinAutoComplete = function() {
         return;
       }
 
-      this.createMarker(place.geometry.location, '00FF00');
+      this.createMarker(place, place.geometry.location, place.name, '00FF00');
 
-      this.locations.push(new Point(place.geometry.location.lat(), place.geometry.location.lng()));
+      this.locations.push(new Point(place.geometry.location.lat(), place.geometry.location.lng(), place));
 
       this.map.setCenter(place.geometry.location);
       this.map.setZoom(15);
@@ -220,9 +219,9 @@ Map.prototype.makeMarkerIcon = function(path) {
         if (status == google.maps.places.PlacesServiceStatus.OK) {
             for (var i = 0; i < results.length; i++) {
                 if (i === 0) {
-                    this.createMarker(results[i].geometry.location, 'FFFF00');
+                    this.createMarker(results[i], results[i].geometry.location, 'FFFF00');
                 } else {
-                    this.createMarker(results[i].geometry.location, '0000FF');
+                    this.createMarker(results[i], results[i].geometry.location, '0000FF');
                 }
             }
         } else {
