@@ -148,17 +148,17 @@ function getMarkers(center, type, callback) {
 		type: [type]
 	};
 
-	var service = new google.maps.places.PlacesService(map);
-	service.nearbySearch(request, function(results, status) {
-		var markers = [];
-		if (status == google.maps.places.PlacesServiceStatus.OK) {
-			createMarkers(results, markers, type);
-		} else {
-			alert("Could not retrieve the " + type + "s. (Status error: " + status + ")");
-		}
-
-		callback(markers);
-	});
+	// var service = new google.maps.places.PlacesService(map);
+	// service.nearbySearch(request, function(results, status) {
+	// 	var markers = [];
+	// 	if (status == google.maps.places.PlacesServiceStatus.OK) {
+	// 		createMarkers(results, markers, type);
+	// 	} else {
+	// 		alert("Could not retrieve the " + type + "s. (Status error: " + status + ")");
+	// 	}
+    //
+	// 	callback(markers);
+	// });
 }
 
 /**
