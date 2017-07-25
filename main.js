@@ -6,7 +6,7 @@ var infowindow;
 */
 function initMap() {
 	// create the map
-	var center =  {lat: 37.7749295, lng: -122.4194155};
+	var center =  {lat: 52.3702160, lng: 4.8951680};
 	map = new google.maps.Map(document.getElementById('map'), {
 		center: center,
 		zoom: 13,
@@ -20,6 +20,11 @@ function initMap() {
 			infowindow.marker.setAnimation(null);
 		}
 		infowindow.marker = null;
+	});
+
+	google.maps.event.addListener(map,'click',function(e){
+   		console.log(e)
+   		createMarker(e.latLng);
 	});
 
 	// create the ViewModel and get the markers
@@ -93,6 +98,7 @@ var ViewModel = function() {
     });
 };
 
+
 /**
 * @description Show/Hide the maskers.
 * @param shown - markers shown.
@@ -161,38 +167,64 @@ function getMarkers(center, type, callback) {
 * @param {array} markers - array where the markers will be added.
 * @param {string} type - restaurant or gym.
 */
-function createMarkers(results, markers, type) {
-	var bounds = new google.maps.LatLngBounds();
-	var defaultIcon = makeMarkerIcon(type === 'restaurant' ? 'static/public/img/restaurant.png' : 'static/public/img/gym.png');
-	var highlightedIcon = makeMarkerIcon(type === 'restaurant' ? 'static/public/img/restaurant2.png' : 'static/public/img/gym2.png');
+// function createMarkers(results, markers, type) {
+// 	var bounds = new google.maps.LatLngBounds();
+// 	var defaultIcon = makeMarkerIcon(type === 'restaurant' ? 'static/public/img/restaurant.png' : 'static/public/img/gym.png');
+// 	var highlightedIcon = makeMarkerIcon(type === 'restaurant' ? 'static/public/img/restaurant2.png' : 'static/public/img/gym2.png');
 
-	for (var i = 0; i < results.length; i++) {
-		// Get the position from the location array.
-		var position = results[i].geometry.location;
-		var title = results[i].name;
-		// Create a marker per location, and put into markers array.
-		var marker = new google.maps.Marker({
-			position: position,
-			title: title,
-			animation: google.maps.Animation.DROP,
-			icon: defaultIcon,
-			id: i,
-			isVisible: true,
-			type: type
-		});
-		// Push the marker to our array of markers.
-		markers.push(marker);
+// 	for (var i = 0; i < results.length; i++) {
+// 		// Get the position from the location array.
+// 		var position = results[i].geometry.location;
+// 		var title = results[i].name;
+// 		// Create a marker per location, and put into markers array.
+// 		var marker = new google.maps.Marker({
+// 			position: position,
+// 			title: title,
+// 			animation: google.maps.Animation.DROP,
+// 			icon: defaultIcon,
+// 			id: i,
+// 			isVisible: true,
+// 			type: type
+// 		});
+// 		// Push the marker to our array of markers.
+// 		markers.push(marker);
 
-		// add listeners
-		addOnClickListener(marker);
-		addOnMouseOverListener(marker, highlightedIcon);
-		addOnMouseOutListener(marker, defaultIcon);
+// 		// add listeners
+// 		addOnClickListener(marker);
+// 		addOnMouseOverListener(marker, highlightedIcon);
+// 		addOnMouseOutListener(marker, defaultIcon);
 
-		marker.setMap(map);
-		bounds.extend(marker.position);
-	}
-	map.fitBounds(bounds);
-}
+// 		marker.setMap(map);
+// 		bounds.extend(marker.position);
+// 	}
+// 	map.fitBounds(bounds);
+// }
+
+function createMarker(position) {
+	// Get the position from the location array.
+	// var title = 'teste';
+	// Create a marker per location, and put into markers array.
+	var marker = new google.maps.Marker({
+		position: position,
+		// title: title,
+		animation: google.maps.Animation.DROP,
+		// icon: defaultIcon,
+		// id: i,
+		isVisible: true
+		// type: type
+	});
+	// Push the marker to our array of markers.
+	// markers.push(marker);
+
+	// add listeners
+	addOnClickListener(marker);
+	// addOnMouseOverListener(marker, highlightedIcon);
+	// addOnMouseOutListener(marker, defaultIcon);
+
+	marker.setMap(map);
+	// bounds.extend(marker.position);
+	// map.fitBounds(bounds);
+};
 
 /**
 * @description Add Marker's onclick event listener.
