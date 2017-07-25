@@ -211,14 +211,18 @@ Map.prototype.makeMarkerIcon = function(path) {
         var markers = [];
         if (status == google.maps.places.PlacesServiceStatus.OK) {
             for (var i = 0; i < results.length; i++) {
-                this.createMarker(results[i].geometry.location, '0000FF');
+                if (i === 0) {
+                    this.createMarker(results[i].geometry.location, 'FFFF00');
+                } else {
+                    this.createMarker(results[i].geometry.location, '0000FF');
+                }
             }
         } else {
             alert("Could not retrieve the " + type + "s. (Status error: " + status + ")");
         }
 
     }.bind(this));
- }
+ };
 
 
 
