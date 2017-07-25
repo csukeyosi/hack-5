@@ -37,7 +37,6 @@ function Map(pinList) {
     $(this.leftPins).on('pinRemoved', function(event, removedPin) {
         var pinName = $(removedPin)[0].firstChild.innerText;
 
-        var x = this.locations;
         for (var i = 0; i < this.locations.length; i++) {
             var locationName = this.locations[i].title;
             var comaIndex = locationName.indexOf(',');
