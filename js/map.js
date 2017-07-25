@@ -26,7 +26,7 @@ function Map(pinList) {
             if (results.length > 0) {
                 title = results[0].formatted_address;
             }
-            var marker = this.createMarker(e, e.latLng, title, '00FF00');
+            var marker = this.createMarker(e, e.latLng, title, '0ab21b');
             this.locations.push(new Point(e.latLng.lat(), e.latLng.lng(), title, marker));
             this.leftPins.addPin(title);
 
@@ -57,11 +57,12 @@ function Map(pinList) {
     this.addPinAutoComplete();
 }
 
-Map.prototype.createMarker = function(element, position, title, color) {
+Map.prototype.createMarker = function(element, position, title, color, bestmatch) {
    // Get the position from the location array.
     // var title = 'teste';
     // Create a marker per location, and put into markers array.
     var marker = new google.maps.Marker({
+        bestmatch: bestmatch,
         title: title,
         element: element,
         position: position,
@@ -115,6 +116,10 @@ Map.prototype.populateInfoWindow = function(marker) {
         var content;
         $.get('/yelp_search?' + params, function(data, status) {
             if (status === 'success' && data.businesses.length > 0) {
+                var buttonClass = 'but-reserve';
+                if(marker.bestmatch) {
+                    buttonClass = 'but-reserve but-reservegold';
+                }
                 var business = data.businesses[0];
                 content = '<div id="pano" style="width:150px;height: 100px;overflow: hidden;margin: 8px 0">' +
                     '<a href="https://www.booking.com"><img id="" class="img-infowindow text-center" width="100%" height="auto" src='+ business.image_url +'></img></a>' +
@@ -127,7 +132,7 @@ Map.prototype.populateInfoWindow = function(marker) {
                     '</div>' +
 
                     '<p style="Font-size: 13px;line-height: 17px;width:150px;">For more info:</p>' +
-                    '<a href="https://www.booking.com" class="but-reserve">Book Now</a>';
+                    '<a href="https://www.booking.com" class="'+ buttonClass +'">Book Now</a>';
             } else {
                 content = '<div class="bold">' + marker.title + '</div>';
             }
@@ -224,9 +229,9 @@ Map.prototype.makeMarkerIcon = function(path) {
         if (status == google.maps.places.PlacesServiceStatus.OK) {
             for (var i = 0; i < results.length; i++) {
                 if (i === 0) {
-                    this.createMarker(results[i], results[i].geometry.location, results[i].name, 'FFFF00');
+                    this.createMarker(results[i], results[i].geometry.location, results[i].name, 'febb02', true);
                 } else {
-                    this.createMarker(results[i], results[i].geometry.location, results[i].name, '0000FF');
+                    this.createMarker(results[i], results[i].geometry.location, results[i].name, '003580', false);
                 }
             }
         } else {
