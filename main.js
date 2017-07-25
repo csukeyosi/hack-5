@@ -61,41 +61,106 @@ function initMap() {
 	var center =  {lat: 52.3702160, lng: 4.8951680};
 	map = new google.maps.Map(document.getElementById('map'), {
 		center: center,
-		zoom: 13,
+		zoom: 15,
 		mapTypeControl: false
 	});
-
-	// create the infoWindow
-	infowindow = new google.maps.InfoWindow();
-	google.maps.event.addListener(infowindow,'closeclick',function(){
-   		if (infowindow.marker) {
-			infowindow.marker.setAnimation(null);
-		}
-		infowindow.marker = null;
-	});
-
 	google.maps.event.addListener(map,'click',function(e){
-   		console.log(e)
-   		createMarker(e.latLng);
-   		locations.push(new Point(e.latLng.lat(), e.latLng.lng(), e.latLng));
-   		console.log(locations);
+   		createMarker(e.latLng, '00FF00');
+   		locations.push(new Point(e.latLng.lat(), e.latLng.lng()));
 	});
+
+	addCityAutoComplete();
+	addPinAutoComplete();
 
 	// create the ViewModel and get the markers
 	var vm = new ViewModel();
-	getMarkers(center, 'restaurant', function(result) {
-		vm.addMarkers(result);
-	});
-	getMarkers(center, 'gym', function(result) {
-		vm.addMarkers(result);
-	});
-
 	ko.applyBindings(vm);
-}
+};
+/**
+ * @description Retrieve the places and create the respective markers.
+ * @param {object} center - latitude and longitude.
+ * @param {string} type - restaurant or gym.
+ * @param {function} callback - used to rertun the created markers.
+ */
+ function getMarkers(center) {
+ 	var request = {
+ 		location: center,
+ 		radius: '200',
+ 		type: ['lodging']
+ 	};
+
+ 	var service = new google.maps.places.PlacesService(map);
+ 	service.nearbySearch(request, function(results, status) {
+ 		var markers = [];
+ 		if (status == google.maps.places.PlacesServiceStatus.OK) {
+ 			for (var i = 0; i < results.length; i++) {
+ 				console.log(results[i])
+ 				createMarker(results[i].geometry.location, '0000FF');
+ 			}
+ 		} else {
+ 			alert("Could not retrieve the " + type + "s. (Status error: " + status + ")");
+ 		}
+
+ 	});
+ }
+
+function addCityAutoComplete() {
+	var options = {
+  		types: ['(cities)']
+ 	};
+	var input = document.getElementById('city-auto');
+	var cityAutocomplete = new google.maps.places.Autocomplete(input, options);
+	cityAutocomplete.bindTo('bounds', map);
+	cityAutocomplete.addListener('place_changed', function() {
+      var place = cityAutocomplete.getPlace();
+      if (!place.geometry) {
+        // User entered the name of a Place that was not suggested and
+        // pressed the Enter key, or the Place Details request failed.
+        window.alert("No details available for input: '" + place.name + "'");
+        return;
+      }
+
+      map.setCenter(place.geometry.location);
+      map.setZoom(15);
+    });
+};
+
+function addPinAutoComplete() {
+	var options = {
+  		strictBounds: true
+ 	};
+	var input = document.getElementById('pin-auto');
+	var pinAutocomplete = new google.maps.places.Autocomplete(input, options);
+	pinAutocomplete.bindTo('bounds', map);
+	pinAutocomplete.addListener('place_changed', function() {
+      var place = pinAutocomplete.getPlace();
+      if (!place.geometry) {
+        // User entered the name of a Place that was not suggested and
+        // pressed the Enter key, or the Place Details request failed.
+        window.alert("No details available for input: '" + place.name + "'");
+        return;
+      }
+
+      var marker = new google.maps.Marker({
+          map: map,
+          anchorPoint: new google.maps.Point(0, -29)
+        });
+      marker.setPosition(place.geometry.location);
+      marker.setVisible(true);
+
+      locations.push(new Point(place.geometry.location.lat(), place.geometry.location.lng()));
+
+      map.setCenter(place.geometry.location);
+      map.setZoom(15);
+    });
+};
 
 function getCentroid() {
-	var region = new Region(locations);
-	return region.centroid();
+	var centroid = new Region(locations).centroid();
+	var myLatlng = new google.maps.LatLng(centroid.x, centroid.y);
+	getMarkers(myLatlng);
+
+	return myLatlng;
 };
 
 /**
@@ -111,56 +176,10 @@ function handleError() {
 var ViewModel = function() {
 	var self = this;
 
-	// markers shown in the list
-	self.shown = ko.observableArray([]);
-
-	// markers hidden from the list
-	self.hidden = ko.observableArray([]);
-
-	self.showHideRestaurants = function() {
-		showHideMarkers(self.shown, self.hidden, 'restaurant');
-	};
-
-	self.showHideGyms = function() {
-		showHideMarkers(self.shown, self.hidden, 'gym');
-	};
-
-	self.addMarkers = function(newMarkers) {
-		for (var i=0; i < newMarkers.length; i++) {
-			self.shown.push(newMarkers[i]);
-		}
-	};
-
-	self.openInfoWindow = function(item) {
-		populateInfoWindow(item);
-	};
-
- 	self.currentFilter = ko.observable();
-
  	self.getCentroid = function() {
-		var centroid = getCentroid();
-		var myLatlng = new google.maps.LatLng(centroid.x, centroid.y);
-		createMarker(myLatlng);
+		var myLatlng = getCentroid();
+		// createMarker(myLatlng);
 	};
-
-	self.filteredMarkers = ko.computed(function() {
-        if(!self.currentFilter()) {
-        	for (var i=0; i < self.shown().length; i++) {
-        		self.shown()[i].setMap(map);
-        	}
-            return self.shown();
-        } else {
-            return ko.utils.arrayFilter(self.shown(), function(item) {
-            	var isMatch = item.title.toLowerCase().indexOf(self.currentFilter().toLowerCase()) !== -1;
-            	if (isMatch) {
-            		item.setMap(map);
-            	} else {
-            		item.setMap(null);
-            	}
-                return isMatch;
-            });
-        }
-    });
 };
 
 
@@ -200,72 +219,8 @@ function showHideMarkers(shown, hidden, type) {
 	}
 }
 
-/**
-* @description Retrieve the places and create the respective markers.
-* @param {object} center - latitude and longitude.
-* @param {string} type - restaurant or gym.
-* @param {function} callback - used to rertun the created markers.
-*/
-function getMarkers(center, type, callback) {
-	var request = {
-		location: center,
-		radius: '500',
-		type: [type]
-	};
 
-	// var service = new google.maps.places.PlacesService(map);
-	// service.nearbySearch(request, function(results, status) {
-	// 	var markers = [];
-	// 	if (status == google.maps.places.PlacesServiceStatus.OK) {
-	// 		createMarkers(results, markers, type);
-	// 	} else {
-	// 		alert("Could not retrieve the " + type + "s. (Status error: " + status + ")");
-	// 	}
-    //
-	// 	callback(markers);
-	// });
-}
-
-/**
-* @description Create the markers.
-* @param {array} results - places retrieved from google.maps.places.PlacesService.
-* @param {array} markers - array where the markers will be added.
-* @param {string} type - restaurant or gym.
-*/
-// function createMarkers(results, markers, type) {
-// 	var bounds = new google.maps.LatLngBounds();
-// 	var defaultIcon = makeMarkerIcon(type === 'restaurant' ? 'static/public/img/restaurant.png' : 'static/public/img/gym.png');
-// 	var highlightedIcon = makeMarkerIcon(type === 'restaurant' ? 'static/public/img/restaurant2.png' : 'static/public/img/gym2.png');
-
-// 	for (var i = 0; i < results.length; i++) {
-// 		// Get the position from the location array.
-// 		var position = results[i].geometry.location;
-// 		var title = results[i].name;
-// 		// Create a marker per location, and put into markers array.
-// 		var marker = new google.maps.Marker({
-// 			position: position,
-// 			title: title,
-// 			animation: google.maps.Animation.DROP,
-// 			icon: defaultIcon,
-// 			id: i,
-// 			isVisible: true,
-// 			type: type
-// 		});
-// 		// Push the marker to our array of markers.
-// 		markers.push(marker);
-
-// 		// add listeners
-// 		addOnClickListener(marker);
-// 		addOnMouseOverListener(marker, highlightedIcon);
-// 		addOnMouseOutListener(marker, defaultIcon);
-
-// 		marker.setMap(map);
-// 		bounds.extend(marker.position);
-// 	}
-// 	map.fitBounds(bounds);
-// }
-
-function createMarker(position) {
+function createMarker(position, color) {
 	// Get the position from the location array.
 	// var title = 'teste';
 	// Create a marker per location, and put into markers array.
@@ -276,7 +231,8 @@ function createMarker(position) {
 		animation: google.maps.Animation.DROP,
 		// icon: defaultIcon,
 		// id: i,
-		isVisible: true
+		isVisible: true,
+		icon : makeMarkerIcon('http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|' + color)
 		// type: type
 	});
 	// Push the marker to our array of markers.
@@ -408,11 +364,12 @@ function focusOnMarker(marker) {
 */
 function makeMarkerIcon(path) {
 	var markerImage = new google.maps.MarkerImage(
-		path,
-		new google.maps.Size(44, 44),
-		new google.maps.Point(0, 0),
-		new google.maps.Point(10, 34),
-		new google.maps.Size(44,44));
+		path
+		// new google.maps.Size(44, 44),
+		// new google.maps.Point(0, 0),
+		// new google.maps.Point(10, 34),
+		// new google.maps.Size(44,44)
+		);
 
 	return markerImage;
 }
