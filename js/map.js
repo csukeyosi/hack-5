@@ -127,7 +127,7 @@ Map.prototype.populateInfoWindow = function(marker) {
                     business.url = "https://www.booking.com";
                 }
                 content = '<div id="pano" style="width:150px;height: 100px;overflow: hidden;margin: 8px 0">' +
-                    '<a href="'+ business.url + '"><img id="" class="img-infowindow text-center" width="100%" height="auto" src='+ business.image_url +'></img></a>' +
+                    '<a target="_blank" href="'+ business.url + '"><img id="" class="img-infowindow text-center" width="100%" height="auto" src='+ business.image_url +'></img></a>' +
                     '</div>' +
                     '<div style="Font-size: 13px;line-height: 17px;font-weight: bold;width:150px;">' + marker.title + '</div>' +
                     '<hr>' +
@@ -138,7 +138,7 @@ Map.prototype.populateInfoWindow = function(marker) {
 
                     '<p style="Font-size: 13px;line-height: 17px;width:150px;">For more info:</p>';
                  if (marker.isHotel) {
-                    content += '<a href="https://www.booking.com" class="'+ buttonClass +'">Book Now</a>';
+                    content += '<a target="_blank" href="https://www.booking.com" class="'+ buttonClass +'">Book Now</a>';
                 }
             } else {
                 content = '<div class="bold">' + marker.title + '</div>';
