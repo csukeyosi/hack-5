@@ -4,7 +4,7 @@ function Map(pinList) {
     this.currentMarkers = [];
     this.map = new google.maps.Map(document.getElementById('map'), {
         center: this.center,
-        zoom: 15,
+        zoom: 13,
         mapTypeControl: false,
         zoomControlOptions: {
             position: google.maps.ControlPosition.RIGHT_CENTER
@@ -186,7 +186,7 @@ Map.prototype.addCityAutoComplete = function() {
       }
 
       this.map.setCenter(place.geometry.location);
-      this.map.setZoom(15);
+      this.map.setZoom(13);
     }.bind(this));
 };
 
