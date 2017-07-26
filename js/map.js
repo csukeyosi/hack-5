@@ -208,7 +208,7 @@ Map.prototype.addPinAutoComplete = function() {
       this.leftPins.addPin(place.name);
 
       this.map.setCenter(place.geometry.location);
-      this.map.setZoom(15);
+      this.map.setZoom(13);
 
       // reset the city search input
       document.getElementById('pin-auto').value = "";
