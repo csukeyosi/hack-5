@@ -209,6 +209,9 @@ Map.prototype.addPinAutoComplete = function() {
 
       this.map.setCenter(place.geometry.location);
       this.map.setZoom(15);
+
+      // reset the city search input
+      document.getElementById('pin-auto').value = "";
     }.bind(this));
 };
 
