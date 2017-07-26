@@ -13,7 +13,6 @@ function Map(pinList) {
     this.locations = [];
 
     this.infowindow = new google.maps.InfoWindow();
-
     google.maps.event.addListener(this.infowindow,'closeclick',function(){
         if (this.infowindow.marker) {
             this.infowindow.marker.setAnimation(null);
@@ -59,22 +58,15 @@ function Map(pinList) {
 }
 
 Map.prototype.createMarker = function(element, position, title, color, bestmatch, isHotel) {
-   // Get the position from the location array.
-    // var title = 'teste';
-    // Create a marker per location, and put into markers array.
     var marker = new google.maps.Marker({
         bestmatch: bestmatch,
         isHotel: isHotel,
         title: title,
         element: element,
         position: position,
-        // title: title,
         animation: google.maps.Animation.DROP,
-        // icon: defaultIcon,
-        // id: i,
         isVisible: true,
         icon : this.makeMarkerIcon('http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|' + color)
-        // type: type
     });
 
     this.addOnClickListener(marker);
@@ -124,7 +116,18 @@ Map.prototype.populateInfoWindow = function(marker) {
                 }
                 var business = data.businesses[0];
                 if (marker.isHotel) {
-                    business.url = "https://www.booking.com";
+                    String.prototype.replaceAll = function(search, replacement) {
+                        var target = this;
+                        return target.split(search).join(replacement);
+                    };
+                    console.log(marker)
+                    var placeId = marker.element.place_id;
+                    var lat = marker.position.lat();
+                    var lng = marker.position.lng();
+                    var ss = marker.title.replaceAll(' ', '%20') + ' ';
+                    ss += marker.element.vicinity.replaceAll(' ', '%20');
+
+                    business.url = 'https://www.booking.com/searchresults.html?place_id=' + placeId + '&place_id_lat='+ lat +'&place_id_lon=' + lng + '&ss=' + ss;
                 }
                 content = '<div id="pano" style="width:150px;height: 100px;overflow: hidden;margin: 8px 0">' +
                     '<a href="'+ business.url + '"><img id="" class="img-infowindow text-center" width="100%" height="auto" src='+ business.image_url +'></img></a>' +
@@ -138,7 +141,7 @@ Map.prototype.populateInfoWindow = function(marker) {
 
                     '<p style="Font-size: 13px;line-height: 17px;width:150px;">For more info:</p>';
                  if (marker.isHotel) {
-                    content += '<a href="https://www.booking.com" class="'+ buttonClass +'">Book Now</a>';
+                    content += '<a href="'+ business.url + '" class="'+ buttonClass +'">Book Now</a>';
                 }
             } else {
                 content = '<div class="bold">' + marker.title + '</div>';
@@ -188,11 +191,8 @@ Map.prototype.addCityAutoComplete = function() {
 };
 
 Map.prototype.addPinAutoComplete = function() {
-    var options = {
-        strictBounds: true
-    };
     var input = document.getElementById('pin-auto');
-    var pinAutocomplete = new google.maps.places.Autocomplete(input, options);
+    var pinAutocomplete = new google.maps.places.Autocomplete(input);
     pinAutocomplete.bindTo('bounds', this.map);
     pinAutocomplete.addListener('place_changed', function() {
       var place = pinAutocomplete.getPlace();
