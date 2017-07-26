@@ -9,9 +9,10 @@ function getCentroid() {
     return map.getCentroid();
 }
 function resetSearch() {
-	map = new Map();
+	map = new Map(pinList);
 	document.getElementById('city-auto').value = "";
 	document.getElementById('pin-auto').value = "";
+	pinList.deleteAll();
 }
 
 function removePin(pin) {

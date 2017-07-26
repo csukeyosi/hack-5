@@ -33,3 +33,10 @@ PinList.prototype.removePin = function(pin) {
     $(this).trigger('pinRemoved', pin);
 };
 
+PinList.prototype.deleteAll = function() {
+    var pins = $("#pinslist .pin");
+    for (var i = 0; i < pins.length; i++) {
+        $(this).trigger('pinRemoved', pins[i]);
+    }
+    $("#pinslist .pin").remove();
+}
